@@ -10,10 +10,10 @@ is intended to be a full experience to be able to write full litterate programs 
 ### Initial targets to implement
 
 - [x] Tangle markdown codeblocks on a per-codeblock basis
-    * The expected syntax for doing this is as follows: `\`\`\`<language> { tangle: path/to/file.lang }`.
+    * The expected syntax for doing this is as follows: `<language> { tangle: path/to/file.lang }`.
     * The above syntax should be used at the start of the node.
 - [ ] Tangle multiple markdown files that are found under a project.
-- [?] Remove/untangle all tangled files in the project
+- [ ] Remove/untangle all tangled files in the project
     * [x] For a single markdown file
     * [ ] For a full project scope/directory
 - [ ] Edit a code block with its native LSP in a new buffer or popup window.
