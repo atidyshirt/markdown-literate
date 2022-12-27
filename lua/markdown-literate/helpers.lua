@@ -20,7 +20,7 @@ Helpers.get_root = function ()
 end
 
 Helpers.remove_files = function (filepath)
-  os.execute(string.format('rm -r %s', filepath))
+  os.remove(filepath)
 end
 
 
