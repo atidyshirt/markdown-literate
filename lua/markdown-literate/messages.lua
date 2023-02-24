@@ -2,6 +2,12 @@ local Messages = {}
 
 Messages.store = {}
 
+Messages.error_no_code_blocks = function ()
+  vim.api.nvim_command('echohl WarningMsg')
+  vim.api.nvim_command('echon "ERROR: Couldn\'t edit code block. Cursor must be inside a code block!"')
+  vim.api.nvim_command('echohl Normal')
+end
+
 Messages.display_undefined_message = function ()
   vim.api.nvim_command('echohl WarningMsg')
   vim.api.nvim_command(string.format('echon "ERROR: Couldn\'t tangle code blocks. No tangled code blocks in %s!"', vim.fn.expand('%')))

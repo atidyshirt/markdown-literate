@@ -1,7 +1,56 @@
 local helpers = require("markdown-literate.helpers")
 local messages = require("markdown-literate.messages")
+local utils = require("nvim-treesitter.ts_utils")
 
 local Tangle = {}
+
+local function lines(str)
+  local result = {}
+  for line in str:gmatch '[^\n]+' do
+    table.insert(result, line)
+  end
+  return result
+end
+
+Tangle.get_cursor_code_block = function ()
+  local code_block = {
+    info_string = helpers.get_cursor_info_string(
+      utils.get_node_at_cursor(0, true)
+    ),
+    code_block = lines(
+      helpers.get_cursor_code_block(
+        utils.get_node_at_cursor(0, true)
+      )
+    ),
+    language = helpers.process_language_from_info_string(
+      helpers.get_cursor_info_string(
+        utils.get_node_at_cursor(0, true)
+      )
+    ),
+    start_line = utils.get_node_at_cursor(0, true):start(),
+    end_line = utils.get_node_at_cursor(0, true):end_()
+  }
+  return code_block
+end
+
+Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer)
+  vim.api.nvim_buf_set_option(edit_buffer, 'filetype', code.language)
+  vim.api.nvim_buf_set_lines(edit_buffer, 0, -1, true, code.code_block)
+  vim.api.nvim_open_win(edit_buffer, true, {
+    relative='cursor', width=80, height=25, bufpos={0, 30}
+  })
+  vim.api.nvim_command(
+    string.format(
+      'autocmd! * <buffer=%s>', edit_buffer
+    )
+  )
+  vim.api.nvim_command(
+    string.format(
+      "autocmd BufWritePost <buffer=%s> execute 'lua vim.api.nvim_buf_set_lines(%s, %s, %s, true, vim.api.nvim_buf_get_lines(%s, 0, -1, true))' | :silent! bdelete",
+      edit_buffer, original_buffer, code.start_line, code.end_line, edit_buffer
+    )
+  )
+end
 
 Tangle.get_code_blocks = function ()
   local current_code_block = {}
@@ -20,8 +69,8 @@ Tangle.get_code_blocks = function ()
     end
     if node:type() == "info_string" then
       local info_string = helpers.get_node_text(node)
-      current_code_block.language = string.gsub(info_string, '(%w[%w|.]+)%s*.*', '%1')
-      current_code_block.filepath = string.gsub(info_string, '.*%s*{%s*tangle:%s+([%w|.|/|_]+)%s*}.*$', '%1')
+      current_code_block.language = helpers.process_language_from_info_string(info_string)
+      current_code_block.filepath = helpers.process_filepath_from_info_string(info_string)
     end
   end
   return all_code_blocks

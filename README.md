@@ -36,3 +36,7 @@ Calling functions to tangle and remove tangled files from the directory
 :lua require('markdown-literate').tangle() => tangles all code blocks with { tangle: file.py }
 :lua require('markdown-literate').remove_tangled() => removes all tangled files from codeblocks
 ```
+
+### Documentation
+
+- [Setup and Customisation](./docs/customisation.md)
