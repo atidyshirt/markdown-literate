@@ -13,11 +13,12 @@ is intended to be a full experience to be able to write full litterate programs 
     * The expected syntax for doing this is as follows: `<language> { tangle: path/to/file.lang }`.
     * The above syntax should be used at the start of the node.
 - [ ] Tangle multiple markdown files that are found under a project.
-- [ ] Remove/untangle all tangled files in the project
+- [x] Remove/untangle all tangled files in the project
     * [x] For a single markdown file
     * [ ] For a full project scope/directory
-- [ ] Edit a code block with its native LSP in a new buffer or popup window.
-- [ ] Setup custom keymaps for each of the events.
+- [x] Edit a code block with its native LSP in a new buffer or popup window.
+- [x] Setup custom keymaps for each of the events.
+    * [ ] Integrate a configuration for this rather then calling functions directly
 - [ ] Ability to tangle an entire `*.md` file to a single document.
     * Not sure exactly what the syntax may look like, but it would be nice to have the option to tangle without specifying the file for every code block.
     * Perhaps using metadata for the `*.md` file might be an option.
@@ -35,6 +36,7 @@ Calling functions to tangle and remove tangled files from the directory
 ```
 :lua require('markdown-literate').tangle() => tangles all code blocks with { tangle: file.py }
 :lua require('markdown-literate').remove_tangled() => removes all tangled files from codeblocks
+:lua require('markdown-literate').edit_block() => edit a specified codeblock
 ```
 
 ### Documentation
