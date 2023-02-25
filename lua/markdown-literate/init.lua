@@ -17,13 +17,12 @@ M.edit_block = function()
   local code = tangle.get_cursor_code_block()
 
   local edit_buffer = vim.api.nvim_call_function("bufnr", { '/tmp/[Block Edit]' })
-  if edit_buffer ~= -1 then
-    vim.api.nvim_buf_set_option(edit_buffer, "modifiable", true)
-  else
+  if edit_buffer == -1 then
     local buf = vim.api.nvim_create_buf(false, false)
     vim.api.nvim_buf_set_name(buf, '/tmp/[Block Edit]')
     edit_buffer = buf
   end
+  vim.api.nvim_buf_set_option(edit_buffer, "modifiable", true)
   tangle.set_edit_buffer_options(edit_buffer, code, original_buffer)
 end
 
