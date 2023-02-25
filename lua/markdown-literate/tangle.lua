@@ -37,7 +37,7 @@ Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer)
   vim.api.nvim_buf_set_option(edit_buffer, 'filetype', code.language)
   vim.api.nvim_buf_set_lines(edit_buffer, 0, -1, true, code.code_block)
   vim.api.nvim_open_win(edit_buffer, true, {
-    relative='cursor', width=80, height=25, bufpos={0, 30}
+    relative='cursor', width=80, height=25, zindex = 10, bufpos={0, 30}
   })
   vim.api.nvim_command(
     string.format(
