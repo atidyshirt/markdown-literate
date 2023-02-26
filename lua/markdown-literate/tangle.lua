@@ -83,8 +83,9 @@ Tangle.remove_tangled_files = function()
   local all_code_blocks = Tangle.get_code_blocks()
   for _, code_block in pairs(all_code_blocks) do
     if code_block.filepath and code_block.filepath ~= code_block.language then
+      code_block.filepath = helpers.process_filepath(code_block.filepath)
       helpers.remove_files(
-        code_block.filepath
+          code_block.filepath
       )
     end
   end
@@ -92,16 +93,23 @@ end
 
 Tangle.tangle_file = function()
   local all_code_blocks = Tangle.get_code_blocks()
+  for _, code_block in pairs(all_code_blocks) do
+    helpers.create_file(
+      code_block.filepath
+    )
+    code_block.filepath = helpers.process_filepath(code_block.filepath)
+    code_block.file = io.open(code_block.filepath, "a")
+  end
   local counter = 0
   for _, code_block in pairs(all_code_blocks) do
     if code_block.filepath and code_block.filepath ~= code_block.language then
-      helpers.create_file(
-        code_block.filepath
-      )
       helpers.tangle_code_blocks(code_block)
       messages.store_message_info(code_block)
       counter = counter + 1
     end
+  end
+  for _, code_block in pairs(all_code_blocks) do
+    code_block.file:close()
   end
   if counter == 0 then
     messages.display_undefined_message()

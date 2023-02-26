@@ -46,6 +46,15 @@ Helpers.remove_files = function (filepath)
   os.remove(filepath)
 end
 
+Helpers.process_filepath = function(filepath)
+  local current_buf = vim.api.nvim_get_current_buf()
+  local buf_name = vim.api.nvim_buf_get_name(current_buf)
+  local relative_parent_dir = vim.fn.fnamemodify(buf_name, ':h')
+  if string.sub(filepath, 1, 2) == "./" then
+    filepath = string.sub(filepath, 3)
+  end
+  return relative_parent_dir .. "/" .. filepath
+end
 
 Helpers.create_file = function (filepath)
   os.execute(string.format('mkdir -p "$(dirname %s)"', filepath))
@@ -53,7 +62,7 @@ Helpers.create_file = function (filepath)
 end
 
 Helpers.tangle_code_blocks = function (code_block)
-  os.execute(string.format("echo '%s\n' >> %s", code_block.code, code_block.filepath))
+    code_block.file:write(code_block.code .. '\n\n')
 end
 
 Helpers.cursorToTop = function ()
