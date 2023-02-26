@@ -46,8 +46,13 @@ Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer)
   )
   vim.api.nvim_command(
     string.format(
-      "autocmd BufWritePost <buffer=%s> execute 'lua vim.api.nvim_buf_set_lines(%s, %s, %s, true, vim.api.nvim_buf_get_lines(%s, 0, -1, true))' | :silent! bdelete",
-      edit_buffer, original_buffer, code.start_line, code.end_line, edit_buffer
+      [[ 
+      autocmd BufWritePost <buffer=%s> 
+      execute 'lua vim.api.nvim_buf_set_option(%s, \"noeol\", true)' 
+      | execute 'lua vim.api.nvim_buf_set_lines(%s, %s, %s, true, vim.api.nvim_buf_get_lines(%s, 0, -1, true))' 
+      | :silent! bdelete 
+      ]],
+      edit_buffer, edit_buffer, original_buffer, code.start_line, code.end_line, edit_buffer
     )
   )
 end
