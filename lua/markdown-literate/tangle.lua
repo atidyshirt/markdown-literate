@@ -6,7 +6,7 @@ local Tangle = {}
 
 local function lines(str)
   local result = {}
-  for line in str:gmatch '[^\n]+' do
+  for line in (str .. '\n'):gmatch '([^\n]*)\n' do
     table.insert(result, line)
   end
   return result
