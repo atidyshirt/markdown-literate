@@ -12,33 +12,47 @@ is intended to be a full experience to be able to write full litterate programs 
 - [x] Tangle markdown codeblocks on a per-codeblock basis
     * The expected syntax for doing this is as follows: `<language> { tangle: path/to/file.lang }`.
     * The above syntax should be used at the start of the node.
-- [ ] Tangle multiple markdown files that are found under a project.
 - [x] Remove/untangle all tangled files in the project
-    * [x] For a single markdown file
-    * [ ] For a full project scope/directory
+    * [x] For a full project scope/directory
 - [x] Edit a code block with its native LSP in a new buffer or popup window.
+    * [x] Implement customised options for the user to use window decorations, window position
 - [x] Setup custom keymaps for each of the events.
-    * [ ] Integrate a configuration for this rather then calling functions directly
-- [ ] Ability to tangle an entire `*.md` file to a single document.
-    * Not sure exactly what the syntax may look like, but it would be nice to have the option to tangle without specifying the file for every code block.
-    * Perhaps using metadata for the `*.md` file might be an option.
+    * [x] Integrate a configuration for this rather then calling functions directly
+- [ ] Tangle multiple markdown files that are found under a project.
+    * Should find all markdown files in the directory, using some identifier as the `root` dir
+- [ ] Ability to tangle an entire `*.md` file to a single document without specifying files
+    * Should check if all code blocks are the same language,
+    * Create a `target` directory of all source files using the `*.md` as the base name for the file
 
 ### Usage
 
-Installing with packer.nvim:
+Installing with packer.nvim and using the defualt keybindings, see [Setup and Customisation](./docs/customisation.md)
+to setup your own keymaps for this plugin.
 
 ```
-use ('atidyshirt/markdown-literate')
+use {
+  "atidyshirt/markdown-literate",
+  config = function()
+    require("markdown-literate").setup()
+  end
+}
 ```
 
-Calling functions to tangle and remove tangled files from the directory
+The default keymaps are as follows:
 
-```
-:lua require('markdown-literate').tangle() => tangles all code blocks with { tangle: file.py }
-:lua require('markdown-literate').remove_tangled() => removes all tangled files from codeblocks
-:lua require('markdown-literate').edit_block() => edit a specified codeblock
-```
+| Keymap         | Purpose                           |
+| -------------- | --------------------------------- |
+| `<leader>tf`   | Tangle the current markdown file  |
+| `<leader>tu`   | Undo/remove all tangled files     |
+| `<leader>te`   | Edit a code block using LSP       |
+
+### Current Issues
+
+- Currently the first time you write to the edit buffer, you will need to force write using `:w!`, this is an issue to fix in the future.
+- Currently we cannot tangle all markdown files in a directory (comming soon)
+- Currently we must specify tangle locations (see the goals of this plugin)
 
 ### Documentation
 
 - [Setup and Customisation](./docs/customisation.md)
+- [Example of code block syntax]

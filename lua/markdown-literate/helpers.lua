@@ -71,4 +71,12 @@ Helpers.process_filepath_from_info_string = function (info_string)
   return string.gsub(info_string, '.*%s*{%s*tangle:%s+([%w|.|/|_]+)%s*}.*$', '%1')
 end
 
+Helpers.map = function (keybind, command, opts)
+    local options = { noremap = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap("n", keybind, command, options)
+end
+
 return Helpers

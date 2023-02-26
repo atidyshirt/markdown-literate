@@ -33,12 +33,10 @@ Tangle.get_cursor_code_block = function ()
   return code_block
 end
 
-Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer)
+Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer, window_options)
   vim.api.nvim_buf_set_option(edit_buffer, 'filetype', code.language)
   vim.api.nvim_buf_set_lines(edit_buffer, 0, -1, true, code.code_block)
-  vim.api.nvim_open_win(edit_buffer, true, {
-    relative='cursor', width=80, height=25, zindex = 10, bufpos={0, 30}
-  })
+  vim.api.nvim_open_win(edit_buffer, true, window_options)
   vim.api.nvim_command(
     string.format(
       'autocmd! * <buffer=%s>', edit_buffer
@@ -46,13 +44,12 @@ Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer)
   )
   vim.api.nvim_command(
     string.format(
-      [[ 
+      [[
       autocmd BufWritePost <buffer=%s> 
-      execute 'lua vim.api.nvim_buf_set_option(%s, \"noeol\", true)' 
-      | execute 'lua vim.api.nvim_buf_set_lines(%s, %s, %s, true, vim.api.nvim_buf_get_lines(%s, 0, -1, true))' 
-      | :silent! bdelete 
+      :silent! execute 'lua vim.api.nvim_buf_set_lines(%s, %s, %s, true, vim.api.nvim_buf_get_lines(%s, 0, -1, true))' 
+      | :silent! bdelete"
       ]],
-      edit_buffer, edit_buffer, original_buffer, code.start_line, code.end_line, edit_buffer
+      edit_buffer, original_buffer, code.start_line, code.end_line, edit_buffer
     )
   )
 end
