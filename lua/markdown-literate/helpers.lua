@@ -48,14 +48,8 @@ end
 
 
 Helpers.create_file = function (filepath)
-  local full_relative_path = vim.fn.fnamemodify(
-      vim.api.nvim_buf_get_name(
-        vim.api.nvim_get_current_buf()
-      ), ':h'
-  )
-  local full_path_excluding_parent_dir = vim.fn.resolve(full_relative_path .. filepath)
-  os.execute(string.format('mkdir -p "$(dirname %s)"', full_path_excluding_parent_dir))
-  os.execute(string.format('touch %s', full_path_excluding_parent_dir))
+  os.execute(string.format('mkdir -p "$(dirname %s)"', filepath))
+  os.execute(string.format('touch %s', filepath))
 end
 
 Helpers.tangle_code_blocks = function (code_block)
