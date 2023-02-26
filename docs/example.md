@@ -5,7 +5,8 @@ The current implementation is to attach a destination in the markdown file using
 syntax `{ tangle: ./path/to/filename.py }`. `markdown-tangle` will evaluate and create the path
 and replace the text in the location file.
 
-Here is an example of how this works in practice.
+Here is an example of how this works in practice, **please view this file as a raw markdown file to
+see the required syntax in usage.**
 
 ```lua { tangle: ./target/plugins/init.lua }
 use {
