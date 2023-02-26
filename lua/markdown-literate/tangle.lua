@@ -94,10 +94,10 @@ end
 Tangle.tangle_file = function()
   local all_code_blocks = Tangle.get_code_blocks()
   for _, code_block in pairs(all_code_blocks) do
+    code_block.filepath = helpers.process_filepath(code_block.filepath)
     helpers.create_file(
       code_block.filepath
     )
-    code_block.filepath = helpers.process_filepath(code_block.filepath)
     code_block.file = io.open(code_block.filepath, "a")
   end
   local counter = 0
