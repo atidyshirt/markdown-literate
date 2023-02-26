@@ -5,7 +5,7 @@
 **Scope for this project:**
 
 This plugin in combination with the [marksman](https://github.com/artempyanykh/marksman) plugin for [Neovim LSP](https://github.com/neovim/nvim-lspconfig)
-is intended to be a full experience to be able to write full litterate programs spanning over multiple files and directories.
+is intended to be a full experience to be able to write full literate programs spanning over multiple files and directories.
 
 ### Initial targets to implement
 
