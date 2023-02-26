@@ -55,4 +55,4 @@ The default keymaps are as follows:
 ### Documentation
 
 - [Setup and Customisation](./docs/customisation.md)
-- [Example of code block syntax]
+- [Example of code block syntax](./docs/example.md)
