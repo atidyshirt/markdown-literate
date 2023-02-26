@@ -35,6 +35,7 @@ end
 
 Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer, window_options)
   vim.api.nvim_buf_set_option(edit_buffer, 'filetype', code.language)
+  vim.api.nvim_buf_set_option(edit_buffer, 'swapfile', false)
   vim.api.nvim_buf_set_lines(edit_buffer, 0, -1, true, code.code_block)
   vim.api.nvim_open_win(edit_buffer, true, window_options)
   vim.api.nvim_command(
