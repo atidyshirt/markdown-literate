@@ -4,8 +4,8 @@ local helpers = require("markdown-literate.helpers")
 local M = {}
 
 M.tangle = function()
-  tangle.remove_tangled_files()
-  tangle.tangle_file()
+      tangle.remove_tangled_files()
+      tangle.tangle_file()
 end
 
 M.remove_tangled = function()
@@ -13,16 +13,23 @@ M.remove_tangled = function()
 end
 
 M.edit_block = function()
-  local original_buffer = vim.api.nvim_get_current_buf()
-  local code = tangle.get_cursor_code_block()
-  local edit_buffer = vim.api.nvim_call_function("bufnr", { '/tmp/[Block Edit]' })
-  if edit_buffer == -1 then
-    local buf = vim.api.nvim_create_buf(false, false)
-    vim.api.nvim_buf_set_name(buf, '/tmp/[Block Edit]')
-    edit_buffer = buf
+  local success, _ = pcall(
+    function()
+      local original_buffer = vim.api.nvim_get_current_buf()
+      local code = tangle.get_cursor_code_block()
+      local edit_buffer = vim.api.nvim_call_function("bufnr", { '/tmp/[Block Edit]' })
+      if edit_buffer == -1 then
+        local buf = vim.api.nvim_create_buf(false, false)
+        vim.api.nvim_buf_set_name(buf, '/tmp/[Block Edit]')
+        edit_buffer = buf
+      end
+      vim.api.nvim_buf_set_option(edit_buffer, "modifiable", true)
+      tangle.set_edit_buffer_options(edit_buffer, code, original_buffer, M.options.window_options)
+    end
+  )
+  if not success then
+    return
   end
-  vim.api.nvim_buf_set_option(edit_buffer, "modifiable", true)
-  tangle.set_edit_buffer_options(edit_buffer, code, original_buffer, M.options.window_options)
 end
 
 local defaults = {
