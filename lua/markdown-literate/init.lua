@@ -4,19 +4,21 @@ local helpers = require("markdown-literate.helpers")
 local M = {}
 
 M.tangle = function()
-      tangle.remove_tangled_files()
-      tangle.tangle_file()
+    local buffer = vim.api.nvim_get_current_buf()
+    tangle.remove_tangled_files(buffer)
+    tangle.tangle_file(buffer)
 end
 
 M.remove_tangled = function()
-  tangle.remove_tangled_files()
+  local buffer = vim.api.nvim_get_current_buf()
+  tangle.remove_tangled_files(buffer)
 end
 
 M.edit_block = function()
   local success, _ = pcall(
     function()
       local original_buffer = vim.api.nvim_get_current_buf()
-      local code = tangle.get_cursor_code_block()
+      local code = tangle.get_cursor_code_block(original_buffer)
       local edit_buffer = vim.api.nvim_call_function("bufnr", { '/tmp/[Block Edit]' })
       if edit_buffer == -1 then
         local buf = vim.api.nvim_create_buf(false, false)

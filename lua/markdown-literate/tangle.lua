@@ -12,18 +12,21 @@ local function lines(str)
   return result
 end
 
-Tangle.get_cursor_code_block = function ()
+Tangle.get_cursor_code_block = function (buffer)
   local code_block = {
     info_string = helpers.get_cursor_info_string(
+      buffer,
       utils.get_node_at_cursor(0, true)
     ),
     code_block = lines(
       helpers.get_cursor_code_block(
+        buffer,
         utils.get_node_at_cursor(0, true)
       )
     ),
     language = helpers.process_language_from_info_string(
       helpers.get_cursor_info_string(
+        buffer,
         utils.get_node_at_cursor(0, true)
       )
     ),
@@ -55,10 +58,10 @@ Tangle.set_edit_buffer_options = function (edit_buffer, code, original_buffer, w
   )
 end
 
-Tangle.get_code_blocks = function ()
+Tangle.get_code_blocks = function (buffer)
   local current_code_block = {}
   local all_code_blocks = {}
-  local root = helpers.get_root()
+  local root = helpers.get_root(buffer)
   local query = vim.treesitter.parse_query('markdown',
     [[(
       (info_string)? @code_block
@@ -66,12 +69,12 @@ Tangle.get_code_blocks = function ()
     )]])
   for _, node, _ in query:iter_captures(root, 0) do
     if node:type() == "code_fence_content" then
-      current_code_block.code = helpers.get_node_text(node)
+      current_code_block.code = helpers.get_node_text(buffer, node)
       table.insert(all_code_blocks, current_code_block)
       current_code_block = {}
     end
     if node:type() == "info_string" then
-      local info_string = helpers.get_node_text(node)
+      local info_string = helpers.get_node_text(buffer, node)
       current_code_block.language = helpers.process_language_from_info_string(info_string)
       current_code_block.filepath = helpers.process_filepath_from_info_string(info_string)
     end
@@ -79,11 +82,11 @@ Tangle.get_code_blocks = function ()
   return all_code_blocks
 end
 
-Tangle.remove_tangled_files = function()
-  local all_code_blocks = Tangle.get_code_blocks()
+Tangle.remove_tangled_files = function(buffer)
+  local all_code_blocks = Tangle.get_code_blocks(buffer)
   for _, code_block in pairs(all_code_blocks) do
     if code_block.filepath and code_block.filepath ~= code_block.language then
-      code_block.filepath = helpers.process_filepath(code_block.filepath)
+      code_block.filepath = helpers.process_filepath(buffer, code_block.filepath)
       helpers.remove_files(
           code_block.filepath
       )
@@ -91,10 +94,10 @@ Tangle.remove_tangled_files = function()
   end
 end
 
-Tangle.tangle_file = function()
-  local all_code_blocks = Tangle.get_code_blocks()
+Tangle.tangle_file = function(buffer)
+  local all_code_blocks = Tangle.get_code_blocks(buffer)
   for _, code_block in pairs(all_code_blocks) do
-    code_block.filepath = helpers.process_filepath(code_block.filepath)
+    code_block.filepath = helpers.process_filepath(buffer, code_block.filepath)
     helpers.create_file(
       code_block.filepath
     )
