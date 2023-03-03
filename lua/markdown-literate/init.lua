@@ -3,6 +3,16 @@ local helpers = require("markdown-literate.helpers")
 
 local M = {}
 
+M.tangle_workspace = function()
+  local buffers = tangle.recursively_find_markdown_buffers()
+  for _, buffer in ipairs(buffers) do
+    tangle.remove_tangled_files(buffer)
+  end
+  for _, buffer in ipairs(buffers) do
+    tangle.tangle_file(buffer)
+  end
+end
+
 M.tangle = function()
     local buffer = vim.api.nvim_get_current_buf()
     tangle.remove_tangled_files(buffer)

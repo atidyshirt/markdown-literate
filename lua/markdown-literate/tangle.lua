@@ -12,6 +12,18 @@ local function lines(str)
   return result
 end
 
+Tangle.recursively_find_markdown_buffers = function ()
+  local files = vim.fn.globpath(vim.fn.getcwd(), '**/*.md', true, true)
+  local buf_ids = {}
+  for _, file in ipairs(files) do
+    local buf_id = helpers.open_file_return_buffer_id(file)
+    if buf_id >= 0 then
+      table.insert(buf_ids, buf_id)
+    end
+  end
+  return buf_ids
+end
+
 Tangle.get_cursor_code_block = function (buffer)
   local code_block = {
     info_string = helpers.get_cursor_info_string(

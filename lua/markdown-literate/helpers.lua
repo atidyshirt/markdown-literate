@@ -10,7 +10,9 @@ Helpers.get_node_text = function (buffer, node)
 end
 
 Helpers.get_fullpath = function(path)
-  return api.nvim_eval('expand("%:p:h")') .. "/" .. path
+  return vim.fn.resolve(
+    api.nvim_eval('expand("%:p:h")') .. "/" .. path
+  )
 end
 
 Helpers.get_root = function (buffer)
@@ -84,6 +86,17 @@ Helpers.map = function (keybind, command, opts)
         options = vim.tbl_extend("force", options, opts)
     end
     vim.api.nvim_set_keymap("n", keybind, command, options)
+end
+
+Helpers.open_file_return_buffer_id = function (filename)
+  local buf = vim.api.nvim_create_buf(false, true)
+  local lines = {}
+  for line in io.lines(filename) do
+    table.insert(lines, line)
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.cmd('edit! ' .. vim.fn.fnameescape(filename))
+  return buf
 end
 
 return Helpers
