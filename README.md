@@ -1,13 +1,14 @@
 # markdown-literate
 
-**EARLY STAGES PLUGIN:** please use with care, as this is very early stages and should not be used for everyday workflow just yet.
+**EARLY STAGES PLUGIN:** please use with care, as this is very early stages and should not be relied for everyday workflow just yet.
+There may be some bugs still around in the code base.
 
 **Scope for this project:**
 
 This plugin in combination with the [marksman](https://github.com/artempyanykh/marksman) plugin for [Neovim LSP](https://github.com/neovim/nvim-lspconfig)
 is intended to be a full experience to be able to write full literate programs spanning over multiple files and directories.
 
-### Initial targets to implement
+### Initial goals to implement
 
 - [x] Tangle markdown codeblocks on a per-codeblock basis
     * The expected syntax for doing this is as follows: `<language> { tangle: path/to/file.lang }`.
@@ -18,8 +19,9 @@ is intended to be a full experience to be able to write full literate programs s
     * [x] Implement customised options for the user to use window decorations, window position
 - [x] Setup custom keymaps for each of the events.
     * [x] Integrate a configuration for this rather then calling functions directly
-- [ ] Tangle multiple markdown files that are found under a project.
+- [x] Tangle multiple markdown files that are found under a project.
     * Should find all markdown files in the directory, using some identifier as the `root` dir
+    * edit: Implementation is based on the `cwd` of the current neovim instance, you can use a plugin like vim-rooter to ensure that we are relative to a specific directory.
 - [ ] Ability to tangle an entire `*.md` file to a single document without specifying files
     * Should check if all code blocks are the same language,
     * Create a `target` directory of all source files using the `*.md` as the base name for the file
@@ -40,16 +42,16 @@ use {
 
 The default keymaps are as follows:
 
-| Keymap         | Purpose                           |
-| -------------- | --------------------------------- |
-| `<leader>tf`   | Tangle the current markdown file  |
-| `<leader>tu`   | Undo/remove all tangled files     |
-| `<leader>te`   | Edit a code block using LSP       |
+| Keymap         | Purpose                               |
+| -------------- | ------------------------------------- |
+| `<leader>tf`   | Tangle the current markdown file      |
+| `<leader>tw`   | Tangle the workspaces markdown files  |
+| `<leader>tu`   | Undo/remove all tangled files         |
+| `<leader>te`   | Edit a code block using LSP           |
 
 ### Current Issues
 
 - Currently the first time you write to the edit buffer, you will need to force write using `:w!`, this is an issue to fix in the future.
-- Currently we cannot tangle all markdown files in a directory (comming soon)
 - Currently we must specify tangle locations (see the goals of this plugin)
 
 ### Documentation

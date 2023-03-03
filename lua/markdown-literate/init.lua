@@ -59,6 +59,7 @@ local defaults = {
   keybinds = {
     edit_block = "<leader>te",
     tangle_file = "<leader>tf",
+    tangle_workspace = "<leader>tw",
     tangle_remove = "<leader>tu",
   }
 }
@@ -69,6 +70,7 @@ function M.setup(options)
   M.options = vim.tbl_deep_extend("force", {}, defaults, options or {})
   helpers.map(M.options.keybinds.edit_block, ":lua require('markdown-literate').edit_block()<CR>", { silent = true })
   helpers.map(M.options.keybinds.tangle_file, ":lua require('markdown-literate').tangle()<CR>")
+  helpers.map(M.options.keybinds.tangle_workspace, ":lua require('markdown-literate').tangle_workspace()<CR>")
   helpers.map(M.options.keybinds.tangle_remove, ":lua require('markdown-literate').remove_tangled()<CR>")
 end
 
