@@ -47,13 +47,11 @@ Helpers.remove_files = function (filepath)
   os.remove(filepath)
 end
 
-Helpers.process_filepath = function(buffer, filepath)
-  local buf_name = vim.api.nvim_buf_get_name(buffer)
-  local relative_parent_dir = vim.fn.fnamemodify(buf_name, ':h')
+Helpers.process_filepath = function(filepath)
   if string.sub(filepath, 1, 2) == "./" then
     filepath = string.sub(filepath, 3)
   end
-  return relative_parent_dir .. "/" .. filepath
+  return filepath
 end
 
 Helpers.create_file = function (filepath)

@@ -98,9 +98,9 @@ Tangle.remove_tangled_files = function(buffer)
   local all_code_blocks = Tangle.get_code_blocks(buffer)
   for _, code_block in pairs(all_code_blocks) do
     if code_block.filepath and code_block.filepath ~= code_block.language then
-      code_block.filepath = helpers.process_filepath(buffer, code_block.filepath)
+      code_block.filepath = helpers.process_filepath(code_block.filepath)
       helpers.remove_files(
-          code_block.filepath
+        code_block.filepath
       )
     end
   end
@@ -109,7 +109,7 @@ end
 Tangle.tangle_file = function(buffer)
   local all_code_blocks = Tangle.get_code_blocks(buffer)
   for _, code_block in pairs(all_code_blocks) do
-    code_block.filepath = helpers.process_filepath(buffer, code_block.filepath)
+    code_block.filepath = helpers.process_filepath(code_block.filepath)
     helpers.create_file(
       code_block.filepath
     )

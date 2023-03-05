@@ -52,7 +52,7 @@ local defaults = {
     width = 80,
     height = 25,
     zindex = 10,
-    bufpos = {0, 30},
+    bufpos = { 0, 30 },
     focusable = true,
     noautocmd = true
   },

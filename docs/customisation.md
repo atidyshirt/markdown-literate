@@ -27,10 +27,10 @@ use {
                     noautocmd = true
                 },
                 keybinds = {
-                edit_block = "<leader>te",
-                tangle_file = "<leader>tf",
-                tangle_workspace = "<leader>tw",
-                tangle_remove = "<leader>tu",
+                    edit_block = "<leader>te",
+                    tangle_file = "<leader>tf",
+                    tangle_workspace = "<leader>tw",
+                    tangle_remove = "<leader>tu",
                 }
             }
         )
