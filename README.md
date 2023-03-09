@@ -28,16 +28,16 @@ is intended to be a full experience to be able to write full literate programs s
 
 ### Usage
 
-Installing with packer.nvim and using the defualt keybindings, see [Setup and Customisation](./docs/customisation.md)
+Installing with packer.nvim and using the default keybindings, see [Setup and Customisation](./docs/customisation.md)
 to setup your own keymaps for this plugin.
 
 ```lua
-use {
-  "atidyshirt/markdown-literate",
-  config = function()
-    require("markdown-literate").setup()
-  end
-}
+use({
+	"atidyshirt/markdown-literate",
+	config = function()
+		require("markdown-literate").setup()
+	end,
+})
 ```
 
 The default keymaps are as follows:

@@ -9,10 +9,10 @@ Here is an example of how this works in practice, **please view this file as a r
 see the required syntax in usage.**
 
 ```lua { tangle: ./target/plugins/init.lua }
-use {
-  "atidyshirt/markdown-literate",
-  config = function()
-    require("markdown-literate").setup()
-  end
-}
+use({
+	"atidyshirt/markdown-literate",
+	config = function()
+		require("markdown-literate").setup()
+	end,
+})
 ```
