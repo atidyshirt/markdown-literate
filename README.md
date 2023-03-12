@@ -11,20 +11,20 @@ is intended to be a full experience to be able to write full literate programs s
 ### Initial goals to implement
 
 - [x] Tangle markdown codeblocks on a per-codeblock basis
-    * The expected syntax for doing this is as follows: `<language> { tangle: path/to/file.lang }`.
-    * The above syntax should be used at the start of the node.
+  - The expected syntax for doing this is as follows: `<language> { tangle: path/to/file.lang }`.
+  - The above syntax should be used at the start of the node.
 - [x] Remove/untangle all tangled files in the project
-    * [x] For a full project scope/directory
+  - [x] For a full project scope/directory
 - [x] Edit a code block with its native LSP in a new buffer or popup window.
-    * [x] Implement customised options for the user to use window decorations, window position
+  - [x] Implement customised options for the user to use window decorations, window position
 - [x] Setup custom keymaps for each of the events.
-    * [x] Integrate a configuration for this rather then calling functions directly
+  - [x] Integrate a configuration for this rather then calling functions directly
 - [x] Tangle multiple markdown files that are found under a project.
-    * Should find all markdown files in the directory, using some identifier as the `root` dir
-    * edit: Implementation is based on the `cwd` of the current neovim instance, you can use a plugin like vim-rooter to ensure that we are relative to a specific directory.
+  - Should find all markdown files in the directory, using some identifier as the `root` dir
+  - edit: Implementation is based on the `cwd` of the current neovim instance, you can use a plugin like vim-rooter to ensure that we are relative to a specific directory.
 - [ ] Ability to tangle an entire `*.md` file to a single document without specifying files
-    * Should check if all code blocks are the same language,
-    * Create a `target` directory of all source files using the `*.md` as the base name for the file
+  - Should check if all code blocks are the same language,
+  - Create a `target` directory of all source files using the `*.md` as the base name for the file
 
 ### Usage
 
@@ -33,21 +33,21 @@ to setup your own keymaps for this plugin.
 
 ```lua
 use({
-	"atidyshirt/markdown-literate",
-	config = function()
-		require("markdown-literate").setup()
-	end,
+  "atidyshirt/markdown-literate",
+  config = function()
+    require("markdown-literate").setup()
+  end,
 })
 ```
 
 The default keymaps are as follows:
 
-| Keymap         | Purpose                               |
-| -------------- | ------------------------------------- |
-| `<leader>tf`   | Tangle the current markdown file      |
-| `<leader>tw`   | Tangle the workspaces markdown files  |
-| `<leader>tu`   | Undo/remove all tangled files         |
-| `<leader>te`   | Edit a code block using LSP           |
+| Keymap       | Purpose                              |
+| ------------ | ------------------------------------ |
+| `<leader>tf` | Tangle the current markdown file     |
+| `<leader>tw` | Tangle the workspaces markdown files |
+| `<leader>tu` | Undo/remove all tangled files        |
+| `<leader>te` | Edit a code block using LSP          |
 
 ### Current Issues
 
