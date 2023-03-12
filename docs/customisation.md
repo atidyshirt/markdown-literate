@@ -11,27 +11,27 @@ to let me know!
 
 ```lua
 use({
-	"atidyshirt/markdown-literate",
-	config = function()
-		require("markdown-literate").setup({
-			window_options = {
-				relative = "cursor",
-				style = "minimal",
-				border = "single",
-				width = 80,
-				height = 25,
-				zindex = 10,
-				bufpos = { 0, 30 },
-				focusable = true,
-				noautocmd = true,
-			},
-			keybinds = {
-				edit_block = "<leader>te",
-				tangle_file = "<leader>tf",
-				tangle_workspace = "<leader>tw",
-				tangle_remove = "<leader>tu",
-			},
-		})
-	end,
+  "atidyshirt/markdown-literate",
+  config = function()
+    require("markdown-literate").setup({
+      window_options = {
+        relative = "cursor",
+        style = "minimal",
+        border = "single",
+        width = 80,
+        height = 25,
+        zindex = 10,
+        bufpos = { 0, 30 },
+        focusable = true,
+        noautocmd = true,
+      },
+      keybinds = {
+        edit_block = "<leader>te",
+        tangle_file = "<leader>tf",
+        tangle_workspace = "<leader>tw",
+        tangle_remove = "<leader>tu",
+      },
+    })
+end,
 })
 ```
