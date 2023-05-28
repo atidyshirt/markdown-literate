@@ -4,7 +4,7 @@ local messages = require("markdown-literate.messages")
 local Helpers = {}
 
 Helpers.get_node_text = function(buffer, node)
-  return vim.treesitter.query.get_node_text(node, buffer)
+  return vim.treesitter.get_node_text(node, buffer)
 end
 
 Helpers.get_fullpath = function(path)

@@ -59,7 +59,7 @@ Tangle.get_code_blocks = function(buffer)
   local current_code_block = {}
   local all_code_blocks = {}
   local root = helpers.get_root(buffer)
-  local query = vim.treesitter.parse_query(
+  local query = vim.treesitter.query.parse(
     "markdown",
     [[(
       (info_string)? @code_block
